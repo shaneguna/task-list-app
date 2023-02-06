@@ -27,8 +27,4 @@ RUN set -ex \
 RUN docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql \
   && docker-php-ext-install pdo pdo_pgsql pgsql bcmath
 
-WORKDIR /var/www/html
-
-#RUN php artisan key:generate
-
 CMD ["php-fpm", "-y", "/usr/local/etc/php-fpm.conf", "-R"]
