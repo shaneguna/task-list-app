@@ -21,7 +21,7 @@
         </style>
 
         @viteReactRefresh
-        @vite('resources/js/app.jsx')
+        @vite('resources/js/index.tsx')
     </head>
     <body>
         <div id="app"></div>

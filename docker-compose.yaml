@@ -1,6 +1,9 @@
 version: '3'
+
 networks:
-  laravel: null
+  laravel:
+    driver: bridge
+
 services:
   nginx:
     build:
@@ -36,14 +39,15 @@ services:
     depends_on:
       - db
     environment:
-      DATABASE_URL: postgresql://dbuser:bigsecret@127.0.0.1/devdb
       DB_CONNECTION: pgsql
+      DB_HOST: db
       DB_PORT: 5432
       DB_DATABASE: devdb
       DB_USERNAME: devuser
       DB_PASSWORD: devpass
     ports:
       - '80:9000'
+      - '3000:3000'
     volumes:
       - './src:/var/www/html'
       - '.env:/var/www/html/.env'
@@ -51,19 +55,20 @@ services:
       - laravel
 
   db:
-    build:
-      context: ./docker/db
-      dockerfile: Dockerfile
-    container_name: db
-    restart: always
-    volumes:
-      - db_data:/var/lib/post/postgresql/data
-    environment:
-      POSTGRES_PASSWORD: devpass
-      POSTGRES_USER: devuser
-      POSTGRES_DB: devdb
+    image: postgres
+    container_name: postgres
+    restart: unless-stopped
+    tty: true
     ports:
-      - "54320:5432"
+      - "5432:5432"
+    volumes:
+      - pgsql:/var/lib/post/postgresql/data
+    environment:
+      - POSTGRES_DB=devdb
+      - POSTGRES_USER=devuser
+      - POSTGRES_PASSWORD=devpass
+    networks:
+      - laravel
 
   composer:
     build:
@@ -128,4 +133,4 @@ services:
       - laravel
 
 volumes:
-  db_data:
+  pgsql:
