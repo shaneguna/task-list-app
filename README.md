@@ -1,6 +1,3 @@
-<!-- ABOUT THE PROJECT -->
-## About The Project
-
 # About The Project
 
 Simple and easy-to-use task list app that displays a TODO list.
