@@ -132,7 +132,7 @@ const TaskListApp = () => {
                     </button>
                 </div>
                 <div className="h-80 overflow-x-hidden overflow-y-auto">
-                    {taskList.map((task, index) => (
+                    {taskList.length > 0 ? taskList.map((task, index) => (
                         <div className="shadow rounded-lg p-3 mt-4 bg-sky-100 flex justify-between">
                             <div
                                 key={index}
@@ -159,7 +159,7 @@ const TaskListApp = () => {
                                 </div>
                             </div>
                         </div>
-                    ))}
+                    )) : <p className="text-md font-semibold text-center">Your task list is empty. Add one?</p>}
                 </div>
             </div>
         </div>

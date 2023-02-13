@@ -23,21 +23,25 @@ API integration and UI exhibits the following:
 - [x] Tailwind
 - [x] Docker
 
+# Project Setup
+
+``copy and rename .env.example to <ROOT_DIR>/.env``
+
 ```docker-compose up -d --build```
 
-``copy .env values from ../src/.env to ../.env``
+```docker-compose run --rm composer install```
 
 ``docker-compose run --rm artisan key:generate``
 
-```docker-compose exec -it php php artisan migrate```
+```docker exec -it php php artisan migrate```
 
-```docker-compose exec -it php php artisan db:seed```
+```docker exec -it php php artisan db:seed```
 
-```docker-compose run --rm npm run build```
+```docker-compose run --rm npm install```
 
 ```docker-compose run --rm npm run dev```
 
-note: ```docker-compose run --rm npm run build``` if port allocation issue is encountered.
+note: ```docker-compose run --rm npm run build``` if port allocation error is encountered.
 
 To run tests:
 PHPUnit
@@ -50,3 +54,26 @@ React Testing Lib-Jest
 
 ![](JEST_TEST.png)
 
+Demo
+
+`- Handle added task at end of uncompleted task list`
+
+`- Handle completed tasks remain inactive`
+
+![CAP_1.gif](CAP_1.gif)
+
+`- Handle sortable uncompleted tasks`
+
+`- Handle remove task`
+
+![CAP_2.gif](CAP_2.gif)
+
+``Handle Empty List``
+
+![EMPTY.png](EMPTY.png)
+
+``Handle Duplicate through Settings``
+
+![ALLOW_DUPLICATES.png](ALLOW_DUPLICATES.png)
+
+![AVOID_DUPLICATES.png](AVOID_DUPLICATES.png)
