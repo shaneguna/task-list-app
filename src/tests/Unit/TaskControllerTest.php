@@ -40,24 +40,6 @@ class TaskControllerTest extends TestCase
         $this->assertEquals(201, $response->getStatusCode());
     }
 
-    public function testShow(): void
-    {
-        $task = Task::factory()->create();
-
-        $taskRepository = $this->createMock(TaskRepository::class);
-        $taskRepository->expects($this->once())
-            ->method('findById')
-            ->with($task->id)
-            ->willReturn($task);
-
-        $controller = new TaskController($taskRepository);
-        $response = $controller->show($task->id);
-
-        $this->assertInstanceOf(JsonResponse::class, $response);
-        $this->assertEquals(200, $response->getStatusCode());
-        $this->assertEquals($task->toArray(), (array) $response->getData());
-    }
-
     public function testUpdate(): void
     {
         $task = Task::factory()->create();

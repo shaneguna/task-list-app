@@ -18,4 +18,6 @@ Route::prefix('tasks')->group(function () {
     Route::get('/all', [TaskController::class, 'index']);
     Route::post('/add', [TaskController::class, 'store']);
     Route::put('/update', [TaskController::class, 'update']);
+    Route::delete('/delete/{id}', [TaskController::class, 'delete']);
+    Route::put('/completed/{id}', [TaskController::class, 'markCompleted']);
 });

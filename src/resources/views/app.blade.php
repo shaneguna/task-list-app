@@ -19,7 +19,7 @@
                 font-family: 'Nunito', sans-serif;
             }
         </style>
-
+        @vite('resources/css/app.css') {{-- added due to vite loader not recognizing app.css file --}}
         @viteReactRefresh
         @vite('resources/js/index.tsx')
     </head>

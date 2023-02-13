@@ -8,6 +8,7 @@ use App\Repositories\Interfaces\TaskRepositoryInterface;
 use App\Repositories\TaskRepository;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 
 class TaskController extends Controller
 {
@@ -20,24 +21,26 @@ class TaskController extends Controller
 
     public function index(): JsonResponse
     {
-        $tasks = $this->taskRepository->all();
+        try {
+            $tasks = $this->taskRepository->all();
+
+        } catch (\Throwable $exception) {
+            return response()->json($exception->getMessage(), 422);
+        }
 
         return response()->json($tasks);
     }
 
     public function store(StoreTaskRequest $request): JsonResponse
     {
-        $this->taskRepository->create($request->all());
-        $tasks = $this->taskRepository->all();
+        try {
+            $this->taskRepository->create($request->all());
+            $tasks = $this->taskRepository->all();
+        } catch (\Throwable $exception) {
+            return response()->json($exception->getMessage(), 422);
+        }
 
         return response()->json($tasks, 201);
-    }
-
-    public function show($id): JsonResponse
-    {
-        $task = $this->taskRepository->findById($id);
-
-        return response()->json($task);
     }
 
     public function update(Request $request): JsonResponse
@@ -45,7 +48,10 @@ class TaskController extends Controller
         foreach ($request->all() as $item) {
             try {
                 $record = $this->taskRepository->findById($item['id']);
+
                 $record->sort_order = $item['sort_order'];
+                $record->label = $item['label'];
+
                 $record->save();
             } catch (\Throwable $exception) {
                 return response()->json($exception->getMessage(), 422);
@@ -55,10 +61,32 @@ class TaskController extends Controller
         return response()->json();
     }
 
-    public function delete(Request $request, $id): JsonResponse
+    public function delete($id): JsonResponse
     {
-        $task = $this->taskRepository->update($id, $request->all());
+        try {
+            $task = $this->taskRepository->delete($id);
+
+        } catch (\Throwable $exception) {
+            return response()->json($exception->getMessage(), 422);
+        }
 
         return response()->json($task);
+    }
+
+    public function markCompleted($id): JsonResponse
+    {
+        $data = [
+            'completed_at' => Carbon::now()->toIso8601String(),
+        ];
+
+        try {
+            $this->taskRepository->update($id, $data);
+
+            $tasks = $this->taskRepository->all();
+        } catch (\Throwable $exception) {
+            return response()->json($exception->getMessage(), 422);
+        }
+
+        return response()->json($tasks);
     }
 }

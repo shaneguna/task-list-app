@@ -11,6 +11,8 @@ class Task extends Model
     use HasFactory, HasAttributes;
 
     protected $fillable = [
-        'label', 'sort_order'
+        'label',
+        'sort_order',
+        'completed_at',
     ];
 }
