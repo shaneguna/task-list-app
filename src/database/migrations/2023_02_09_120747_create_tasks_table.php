@@ -16,8 +16,8 @@ return new class extends Migration
         Schema::create('tasks', function (Blueprint $table) {
             $table->id();
             $table->string('label');
-            $table->string('sort_order');
-            $table->dateTime('completed_at');
+            $table->integer('sort_order');
+            $table->timestamp('completed_at')->nullable();
             $table->timestamps();
         });
     }
