@@ -4,6 +4,7 @@ use App\Models\Task;
 use App\Repositories\Interfaces\TaskRepositoryInterface;
 use App\Repositories\TaskRepository;
 use Database\Seeders\TaskSeeder;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Collection;
 use Tests\TestCase;
@@ -39,7 +40,7 @@ class TaskRepositoryTest extends TestCase
 
     public function testFindByIdMethodThrowsExceptionForInvalidId()
     {
-        $this->expectException(\Illuminate\Database\Eloquent\ModelNotFoundException::class);
+        $this->expectException(ModelNotFoundException::class);
         $this->taskRepository->findById(999);
     }
 

@@ -44,7 +44,7 @@ class TaskControllerTest extends TestCase
     {
         $task = Task::factory()->create();
         $data = [
-            ['id' => $task->id, 'sort_order' => 2],
+            ['id' => $task->id, 'sort_order' => 2, 'label' => 'Must Test Update'],
         ];
 
         $request = $this->createMock(Request::class);
